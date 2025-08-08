@@ -1,7 +1,7 @@
 import React from 'react'
 import  img1 from "./assets/img/image 1.png"
 import ProductItem from './ProductItem'
-import { products } from './data'
+import { PRODUCTS } from './data'
 
 export default function ProductList() {
   return (<>
@@ -18,7 +18,7 @@ export default function ProductList() {
             </div>
           </div>
   <div class="product-grid">
-            {products.map((product) => (
+            {PRODUCTS.map((product) => (
               <ProductItem key={product.id} product={product} />
             ))}
             </div>  </>)
