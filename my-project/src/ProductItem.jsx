@@ -11,7 +11,6 @@ export default function ProductItem({ product }) {
     item.size === "Medium" && 
     item.color === "Default"
   );
-console.log(cartState);
   const handleAddToCart = () => {
     addToCart(product, "Medium", "Default");
   };

@@ -1,4 +1,4 @@
-const PRODUCTS = [
+export const PRODUCTS = [
   {
     id: 1,
     name: "Gradient Graphic T-shirt",
@@ -125,4 +125,3 @@ const PRODUCTS = [
   }
 ];
 
-export { PRODUCTS };
