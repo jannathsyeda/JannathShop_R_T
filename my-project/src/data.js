@@ -26,7 +26,7 @@ export const PRODUCTS = [
     originalPrice: 160,
     rating: 3,
     maxRating: 5,
-    stock: 420,
+    stock: 0, // Out of stock for testing
     image: "image 7-1.png",
     category: "t-shirt"
   },

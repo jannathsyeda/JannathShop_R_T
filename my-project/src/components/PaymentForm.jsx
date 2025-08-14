@@ -3,6 +3,8 @@ import { useCheckout } from '../context/CheckoutContext';
 import { SHIPPING_METHODS } from '../constants/shipping';
 import FormInput from './FormInput';
 
+
+
 const PaymentForm = () => {
   const { checkoutState, setPaymentInfo, setShippingMethod, setPaymentMethod, setStep } = useCheckout();
   const [selectedShipping, setSelectedShipping] = useState(checkoutState.shippingMethod || 'standard');

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getUrl } from "./ImageUrl/ImageUrl.js";
 import StarRating from "./StarRating.jsx";
 import { useCart } from "./context/CartContext";
+
 export default function ProductItem({ product }) {
  const { cartState, addToCart, removeFromCart } = useCart();
 
@@ -11,9 +12,14 @@ export default function ProductItem({ product }) {
     item.size === "Medium" && 
     item.color === "Default"
   );
+
+    // Check if product is out of stock
+  const isOutOfStock = product.stock === 0;
+
   const handleAddToCart = () => {
-    addToCart(product, "Medium", "Default");
-  };
+if (!isOutOfStock) {
+      addToCart(product, "Medium", "Default");
+    }  };
 
   const handleRemoveFromCart = () => {
     removeFromCart(product.id, "Medium", "Default");
@@ -43,9 +49,14 @@ export default function ProductItem({ product }) {
               {product.rating}/{product.maxRating}
             </span>
           </div>
-          <span class="text-xs text-gray-700">
+          {/* <span class="text-xs text-gray-700">
           ({product.stock} pcs left)
-          </span>
+          </span> */}
+
+  <span className={`text-sm ml-2 ${isOutOfStock ? 'text-red-500 font-medium' : 'text-gray-500'}`}>
+          {isOutOfStock ? 'Out of Stock' : `(${product.stock} pcs left)`}
+        </span>
+
         </div>
         <p class="font-bold">
           {product.price}
@@ -55,14 +66,22 @@ export default function ProductItem({ product }) {
         </p>
         <button
         onClick={isInCart ? handleRemoveFromCart : handleAddToCart}
+                disabled={!isInCart && isOutOfStock}
+
         className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
-          isInCart
+          !isInCart && isOutOfStock
+            ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+            : isInCart
             ? 'bg-red-600 hover:bg-red-700 text-white'
             : 'bg-gray-800 hover:bg-gray-900 text-white'
         }`}
       >
-        {isInCart ? 'Remove from Cart' : 'Add to Cart'}
-      </button>
+ {!isInCart && isOutOfStock 
+          ? 'Out of Stock' 
+          : isInCart 
+          ? 'Remove from Cart' 
+          : 'Add to Cart'
+        }      </button>
       </div>
     </div>
   );

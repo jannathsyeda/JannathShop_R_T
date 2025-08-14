@@ -35,9 +35,18 @@ export default function CartItem({ item }) {
             onClick={() => handleQuantityChange(item.quantity - 1)}
                     class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">−</button>
                   <span class="text-sm">{item.quantity}</span>
-                  <button 
+                  {/* <button 
                               onClick={() => handleQuantityChange(item.quantity + 1)}
- class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">+</button>
+ class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">+</button> */}
+ <button
+  onClick={() => handleQuantityChange(item.quantity + 1)}
+  disabled={item.quantity >= item.stock}
+  className={`w-6 h-6 border border-gray-300 rounded flex items-center justify-center text-sm 
+    ${item.quantity >= item.stock ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+>
+  +
+</button>
+
                 </div>
               </div>
             </div>
