@@ -2,30 +2,34 @@ import React from 'react'
 import  img1 from "./assets/img/image 1.png"
 import ProductItem from './ProductItem'
 import { useState } from 'react'
+import { useProducts } from './context/ProductContext.jsx'
+
 
 export default function ProductList({PRODUCTS}) {
   const [sortBy, setSortBy] = useState('Most Popular');
-  const [products, setProducts] = useState(PRODUCTS);
+  const { products } = useProducts();
+  const [sortedProducts, setSortedProducts] = useState(products);
 
-  const handleSortChange = (e) => {
-    const value = e.target.value;
-    setSortBy(value);
-    
-    let sortedProducts = [...PRODUCTS];
-    switch (value) {
+  React.useEffect(() => {
+    let sorted = [...products];
+    switch (sortBy) {
       case 'Most Popular':
-        sortedProducts.sort((a, b) => b.rating - a.rating);
+        sorted.sort((a, b) => b.rating - a.rating);
         break;
       case 'Price: Low to High':
-        sortedProducts.sort((a, b) => a.price - b.price);
+        sorted.sort((a, b) => a.price - b.price);
         break;
       case 'Price: High to Low':
-        sortedProducts.sort((a, b) => b.price - a.price);
+        sorted.sort((a, b) => b.price - a.price);
         break;
       default:
         break;
     }
-    setProducts(sortedProducts);
+    setSortedProducts(sorted);
+  }, [products, sortBy]);
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
   };
   return (<>
      <div class="flex items-center justify-between mb-6">
@@ -45,11 +49,9 @@ export default function ProductList({PRODUCTS}) {
             </div>
           </div>
   <div class="product-grid">
- {products?.length > 0 && 
-  products.map(product => (
-    <ProductItem key={product.id} product={product} />
-  ))
-}
+ {sortedProducts.map(product => (
+          <ProductItem key={product.id} product={product} />
+        ))}
          
             </div>  </>)
 }

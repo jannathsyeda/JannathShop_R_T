@@ -24,12 +24,19 @@ export const CartProvider = ({ children }) => {
       });
     };
   
-    const updateQuantity = (id, size, color, quantity) => {
-      dispatch({
-        type: 'UPDATE_QUANTITY',
-        payload: { id, size, color, quantity }
-      });
-    };
+    // const updateQuantity = (id, size, color, quantity) => {
+    //   dispatch({
+    //     type: 'UPDATE_QUANTITY',
+    //     payload: { id, size, color, quantity }
+    //   });
+    // };
+    // 3. UPDATE CART PROVIDER updateQuantity FUNCTION
+const updateQuantity = (id, size, color, quantity, currentStock) => {
+  dispatch({
+    type: 'UPDATE_QUANTITY',
+    payload: { id, size, color, quantity, currentStock }
+  });
+};
   
     const applyDiscount = (discount) => {
       dispatch({

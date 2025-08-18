@@ -4,6 +4,7 @@ import Header from "./Header";
 import MainContent from "./MainContent";
 import { CartProvider } from "./context/CartProvider";
 import { CheckoutProvider } from "./context/CheckoutProvider";
+import { ProductsProvider } from "./context/ProductProvider";
 
 export default function Page() {
   return (
@@ -12,7 +13,7 @@ export default function Page() {
       <Header />
       
 
-
+<ProductsProvider>
       <CartProvider>
       <CheckoutProvider>
         <div className="min-h-screen bg-gray-50">
@@ -20,6 +21,7 @@ export default function Page() {
         </div>
       </CheckoutProvider>
     </CartProvider>
+    </ProductsProvider>
     </>
   );
 }

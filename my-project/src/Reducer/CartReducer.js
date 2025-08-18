@@ -1,5 +1,5 @@
 export const cartReducer = (state, action) => {
-  switch (action.type) {
+ switch (action.type) {
     case 'ADD_TO_CART':
       const existingItem = state.items.find(item => 
         item.id === action.payload.id && 
@@ -7,11 +7,10 @@ export const cartReducer = (state, action) => {
         item.color === action.payload.color
       );
       
-        // Prevent adding if stock is 0
-  if (action.payload.stock <= 0) {
-    return state;
-  }
-
+      // Prevent adding if stock is 0
+      if (action.payload.stock <= 0) {
+        return state;
+      }
 
       if (existingItem) {
         return {
@@ -41,35 +40,24 @@ export const cartReducer = (state, action) => {
         )
       };
       
-    // case 'UPDATE_QUANTITY':
-    //   return {
-    //     ...state,
-    //     items: state.items.map(item =>
-    //       item.id === action.payload.id && 
-    //       item.size === action.payload.size && 
-    //       item.color === action.payload.color
-    //         ? { ...item, quantity: Math.max(0, action.payload.quantity) }
-    //         : item
-    //     ).filter(item => item.quantity > 0)
-    //   };
     case 'UPDATE_QUANTITY':
-  return {
-    ...state,
-    items: state.items.map(item => {
-      if (
-        item.id === action.payload.id &&
-        item.size === action.payload.size &&
-        item.color === action.payload.color
-      ) {
-        // Prevent exceeding stock
-        if (action.payload.quantity > item.stock) {
-          return item; // no change
-        }
-        return { ...item, quantity: Math.max(1, action.payload.quantity) };
-      }
-      return item;
-    })
-  };
+      return {
+        ...state,
+        items: state.items.map(item => {
+          if (
+            item.id === action.payload.id &&
+            item.size === action.payload.size &&
+            item.color === action.payload.color
+          ) {
+            // Get current stock for this product
+            const currentStock = action.payload.currentStock || item.stock;
+            // Prevent exceeding stock and going below 1
+            const newQuantity = Math.max(1, Math.min(action.payload.quantity, currentStock));
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        }).filter(item => item.quantity > 0)
+      };
       
     case 'APPLY_DISCOUNT':
       return {
