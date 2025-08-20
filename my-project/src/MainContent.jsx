@@ -11,7 +11,7 @@ export default function MainContent() {
           <ProductList PRODUCTS={PRODUCTS}/>
         </div>
 
-        <CartList />
+        {/* <CartList /> */}
       </div>
     </main>
   );

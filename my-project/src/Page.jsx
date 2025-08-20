@@ -5,23 +5,23 @@ import MainContent from "./MainContent";
 import { CartProvider } from "./context/CartProvider";
 import { CheckoutProvider } from "./context/CheckoutProvider";
 import { ProductsProvider } from "./context/ProductProvider";
+import { UIProvider } from "./context/UiProvider";
+import CartSidebar from "./CartSidebar";
+import AppContent from "./AppContent";
 
 export default function Page() {
   return (
     <>
-      <AnnounceBar />
-      <Header />
-      
-
-<ProductsProvider>
-      <CartProvider>
-      <CheckoutProvider>
-        <div className="min-h-screen bg-gray-50">
-       <MainContent/>  
-        </div>
-      </CheckoutProvider>
-    </CartProvider>
-    </ProductsProvider>
+   <AnnounceBar />
+      <UIProvider>
+        <ProductsProvider>
+          <CartProvider>
+            <CheckoutProvider>
+              <AppContent />
+            </CheckoutProvider>
+          </CartProvider>
+        </ProductsProvider>
+      </UIProvider>
     </>
   );
 }

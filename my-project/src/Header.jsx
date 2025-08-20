@@ -1,6 +1,12 @@
 import React from 'react'
+import { useCart } from "./context/CartContext";
+import {useUI} from "./context/UiContext"
 
 export default function Header() {
+
+ const { toggleCart, openCart } = useUI();
+  const { getCartCount } = useCart();
+
   return (
  <header class="border-b border-gray-200 py-4 px-4 md:px-8">
     <div class="container mx-auto flex items-center justify-between">
@@ -26,12 +32,32 @@ export default function Header() {
           </span>
         </div>
 
-        <a href="#" class="hover:text-gray-500 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-        </a>
+
+       
+       <button 
+  onClick={toggleCart}
+  className="relative p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+>
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    className="h-6 w-6" 
+    fill="none" 
+    viewBox="0 0 24 24" 
+    stroke="currentColor"
+  >
+    <path 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      strokeWidth="2"
+      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" 
+    />
+  </svg>
+  {getCartCount() > 0 && (
+    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {getCartCount()}
+    </span>
+  )} 
+</button>
 
         <a href="#" class="hover:text-gray-500 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

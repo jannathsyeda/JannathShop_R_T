@@ -3,6 +3,7 @@ import { getUrl } from "./ImageUrl/ImageUrl.js";
 import StarRating from "./StarRating.jsx";
 import { useCart } from "./context/CartContext";
 import {useProducts} from "./context/ProductContext"
+// import { useUI } from "./context/UiContext.jsx";
 
 export default function ProductItem({ product }) {
    const { cartState, addToCart, removeFromCart } = useCart();
@@ -20,10 +21,14 @@ export default function ProductItem({ product }) {
 
   const isInCart = !!cartItem;
 
+  //  const { openCart } = useUI();
+
   const handleAddToCart = () => {
     if (currentProduct.stock > 0) {
       addToCart(currentProduct, "Medium", "Default");
       decreaseStock(product.id, 1);
+            // openCart();
+
     }
   };
 
