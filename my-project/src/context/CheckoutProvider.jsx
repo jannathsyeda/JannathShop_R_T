@@ -18,7 +18,7 @@ const checkoutReducer = (state, action) => {
       return { ...state, orderPlaced: true, orderNumber: action.payload };
     case 'RESET_CHECKOUT':
       return {
-        currentStep: 1,
+        currentStep: 0,
         shippingInfo: {},
         paymentInfo: {},
         shippingMethod: null,
@@ -33,7 +33,7 @@ const checkoutReducer = (state, action) => {
 
 const CheckoutProvider = ({ children }) => {
   const [checkoutState, dispatch] = useReducer(checkoutReducer, {
-    currentStep: 1,
+    currentStep: 0,
     shippingInfo: {},
     paymentInfo: {},
     shippingMethod: null,

@@ -3,16 +3,12 @@ import { useCart } from './context/CartContext';
 import { useUI } from './context/UiContext';
 import { useCheckout } from './context/CheckoutContext';
 import CartItem from './CartItem';
-import CheckoutPage from './components/CheckoutPage';
-
 
 export default function CartSidebar() {
-
-    const { cartState, getCartTotal, applyDiscount } = useCart();
-  const { setStep } = useCheckout(); // ADDED: Missing checkout functionality
+  const { cartState, getCartTotal, applyDiscount } = useCart();
+  const { setStep } = useCheckout();
   const { isCartOpen, closeCart } = useUI();
   const [promoCode, setPromoCode] = useState('');
-  const [showCheckout, setShowCheckout] = useState(false); // ADDED: Missing checkout state
 
   const subtotal = getCartTotal();
   const discountAmount = (subtotal * cartState.discount) / 100;
@@ -28,28 +24,23 @@ export default function CartSidebar() {
     setPromoCode('');
   };
 
-  // ADDED: Missing checkout handler
   const handleCheckout = () => {
+    console.log("hi")
     setStep(1);
-    setShowCheckout(true);
+    closeCart();
   };
-
-  // ADDED: Handle checkout page display
-  if (showCheckout) {
-    return <CheckoutPage />;
-  }
 
   if (!isCartOpen) return null
 
   return (
-  <div className="fixed inset-0 z-50">
-      {/* Overlay - FIXED */}
+    <div className="fixed inset-0 z-50">
+      {/* Overlay */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={closeCart}
       />
 
-      {/* Cart Sidebar - FIXED */}
+      {/* Cart Sidebar */}
       <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-out">
         <div className="flex flex-col h-full">
           {/* Header */}
@@ -58,8 +49,8 @@ export default function CartSidebar() {
             <button
               onClick={closeCart}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >x
-              {/* <X className="w-5 h-5 text-gray-600" /> */}
+            >
+              x
             </button>
           </div>
 
@@ -68,7 +59,8 @@ export default function CartSidebar() {
             {cartState.items.length === 0 ? (
               <div className="text-center py-16">
                 <div className="mb-4">
-                  <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto" />
+                  {/* <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto" /> */}
+                  <div className="w-16 h-16 bg-gray-300 mx-auto rounded"></div>
                 </div>
                 <p className="text-gray-500 mb-6 text-lg">Your cart is empty</p>
                 <button 
@@ -128,12 +120,13 @@ export default function CartSidebar() {
                   Apply
                 </button>
               </div>
-         <button 
-  onClick={handleCheckout}  // Now actually does something!
-  className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 font-medium"
->
-  Go to Checkout →
-</button>
+              
+              <button 
+                onClick={handleCheckout}  
+                className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 font-medium"
+              >
+                Go to Checkout →
+              </button>
             </div>
           )}
         </div>
